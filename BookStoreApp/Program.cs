@@ -1,6 +1,46 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using BookStoreApp.Repository;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.VisualBasic;
 
-app.MapGet("/", () => "Hello World!");
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-app.Run();
+        builder.Services.AddControllersWithViews();
+        builder.Services.AddScoped<BookRepository>();
+
+        var app = builder.Build();
+
+        //app.Use(async (context, next) =>
+        //{
+        //    await context.Response.WriteAsync("Hello My first Middle Ware");
+
+        //    await next();
+        //});
+        if (builder.Environment.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+
+        app.UseStaticFiles();
+
+        //app.UseStaticFiles(new StaticFileOptions()
+        //{
+        //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),"MyStaticFiles")),
+        //    RequestPath = "/MyStaticFiles"
+        //});
+
+
+
+        app.UseRouting();
+
+        app.UseEndpoints(endpoints => {
+            endpoints.MapDefaultControllerRoute();
+        });
+     
+
+        app.Run();
+    }
+}
