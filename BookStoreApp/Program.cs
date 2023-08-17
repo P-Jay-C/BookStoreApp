@@ -11,6 +11,11 @@ internal class Program
         builder.Services.AddControllersWithViews();
         builder.Services.AddScoped<BookRepository>();
 
+#if DEBUG
+
+        builder.Services.AddRazorPages().AddRazorRuntimeCompilation(); // Prevent rebuilding of project to update view
+#endif
+
         var app = builder.Build();
 
         //app.Use(async (context, next) =>
@@ -30,6 +35,7 @@ internal class Program
         //{
         //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),"MyStaticFiles")),
         //    RequestPath = "/MyStaticFiles"
+
         //});
 
 
