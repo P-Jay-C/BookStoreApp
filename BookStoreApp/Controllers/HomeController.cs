@@ -6,6 +6,7 @@ namespace BookStoreApp.Controllers
     {
         public ViewResult Index()
         {
+
             return View();
         }
 
